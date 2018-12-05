@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define START_CAPACITY 256
+
 struct Stack {
   int capacity;
   int size;
@@ -9,7 +11,7 @@ struct Stack {
 };
 
 void init_stack(struct Stack *stack) {
-  stack->capacity = 256;
+  stack->capacity = START_CAPACITY;
   stack->size = 0;
   stack->c = (char*)malloc(stack->capacity * sizeof(char));
 }
