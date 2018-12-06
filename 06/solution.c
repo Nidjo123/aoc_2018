@@ -26,7 +26,7 @@ int manhattan(const struct Point *p1,
 }
 
 struct AABB find_AABB(const struct Point *p, int n_points) {
-  struct AABB aabb = {0};
+  struct AABB aabb = {AREA_SIZE, AREA_SIZE, 0, 0};
   for (int i = 0; i < n_points; i++) {
     aabb.minx = MIN(aabb.minx, p[i].x);
     aabb.miny = MIN(aabb.miny, p[i].y);
