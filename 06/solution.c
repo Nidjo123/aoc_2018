@@ -61,14 +61,14 @@ int closest_point(int x, int y, const struct Point *points,
 
 void mark_infinites(const int *coordinates, struct Point *points,
 		    int n_points) {
-    struct AABB aabb = find_AABB(points, n_points);
+  struct AABB aabb = find_AABB(points, n_points);
 
-    for (int i = 0; i < AREA_SIZE; i++) {
-      points[coordinates[i*AREA_SIZE+aabb.minx]].is_infinite = 1;
-      points[coordinates[i*AREA_SIZE+aabb.maxx]].is_infinite = 1;
-      points[coordinates[aabb.miny*AREA_SIZE+i]].is_infinite = 1;
-      points[coordinates[aabb.maxy*AREA_SIZE+i]].is_infinite = 1;
-    }
+  for (int i = 0; i < AREA_SIZE; i++) {
+    points[coordinates[i*AREA_SIZE+aabb.minx]].is_infinite = 1;
+    points[coordinates[i*AREA_SIZE+aabb.maxx]].is_infinite = 1;
+    points[coordinates[aabb.miny*AREA_SIZE+i]].is_infinite = 1;
+    points[coordinates[aabb.maxy*AREA_SIZE+i]].is_infinite = 1;
+  }
 }
 
 int area(int *coordinates, int point_id) {
