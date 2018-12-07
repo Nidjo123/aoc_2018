@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #define MAXN ('Z' - 'A' + 1)
-#define N_WORKERS 2
+#define N_WORKERS 5
 
 #define INDEX(c) ((c) - 'A')
 #define CHAR(i) ('A' + (i))
@@ -70,7 +70,7 @@ void print(struct Node *nodes) {
 }
 
 int is_done(const struct Worker *worker) {
-  return worker->progress > INDEX(worker->c) + 1;
+  return worker->progress > 60 + INDEX(worker->c) + 1;
 }
 
 int duration(struct Node *nodes) {
@@ -80,10 +80,7 @@ int duration(struct Node *nodes) {
   int done = 0;
   int second;
   for (second = 0; !done; second++) {
-    printf("Second %d ", second);
-
     for (int i = 0; i < N_WORKERS; i++) {
-      printf("%c ", workers[i].c);
       workers[i].progress++;
       if (workers[i].c && is_done(&workers[i])) {
 	printed[INDEX(workers[i].c)] = 1;
@@ -91,8 +88,6 @@ int duration(struct Node *nodes) {
 	scheduled[i] = 0;
       }
     }
-    putchar('\n');
-
 
     done = 1;
     for (int i = 0; i < MAXN; i++) {
@@ -117,7 +112,7 @@ int duration(struct Node *nodes) {
 }
 
 int main(void) {
-  FILE *f = fopen("test.input", "r");
+  FILE *f = fopen("input", "r");
 
   if (f == NULL) {
     printf("Couldn't open the file!\n");
