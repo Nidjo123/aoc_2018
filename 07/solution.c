@@ -8,7 +8,7 @@
 
 struct Node {
   char name;
-  int n_next;
+  int n_constraints;
   char constraints[MAXN];
 };
 
@@ -19,24 +19,24 @@ struct Worker {
 
 void add_next(struct Node *nodes, char before, char after) {
   int to = INDEX(after);
-  int n_next = nodes[to].n_next;
+  int n_constraints = nodes[to].n_constraints;
 
   // find appropriate place (alphabetically sorted)
   int i;
-  for (i = 0; i < n_next; i++)
+  for (i = 0; i < n_constraints; i++)
     if (nodes[to].constraints[i] > after)
       break;
 
   // make room for new member in next
-  for (int j = n_next; j > i; j--)
+  for (int j = n_constraints; j > i; j--)
     nodes[to].constraints[j] = nodes[to].constraints[j - 1];
 
   nodes[to].constraints[i] = before;
-  nodes[to].n_next++;
+  nodes[to].n_constraints++;
 }
 
 char can_use(int *printed, const struct Node *node) {
-  for (int i = 0; i < node->n_next; i++)
+  for (int i = 0; i < node->n_constraints; i++)
     if (!printed[INDEX(node->constraints[i])])
       return 0;
   return 1;
