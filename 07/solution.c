@@ -17,13 +17,6 @@ struct Worker {
   int progress;
 };
 
-enum Status {
-	     PRESENT = 1,
-	     AFTER_CONSTRAINT,
-	     PRINTED,
-	     AVAILABLE,
-};
-
 void add_next(struct Node *nodes, char before, char after) {
   int to = INDEX(after);
   int n_next = nodes[to].n_next;
@@ -120,8 +113,6 @@ int main(void) {
   }
 
   struct Node nodes[MAXN] = {0};
-
-  int flags[MAXN] = {0};
 
   char c_before, c_after;
   char c_start;
