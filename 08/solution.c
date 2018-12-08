@@ -44,6 +44,8 @@ void cleanup_node(struct Node *node) {
     free(node->children);
   if (node->n_metadata > 0)
     free(node->metadata);
+
+  free(node);
 }
 
 struct Vector {
@@ -92,14 +94,32 @@ struct Node* build_tree(const struct Vector *vec) {
 
 int metadata_sum(const struct Node *node) {
   int sum = 0;
-
-  for (int i = 0; i < node->n_children; i++)
-    sum += metadata_sum(node->children[i]);
-
   for (int i = 0; i < node->n_metadata; i++)
     sum += node->metadata[i];
 
   return sum;
+}
+
+int all_metadata_sum(const struct Node *node) {
+  int sum = metadata_sum(node);
+  for (int i = 0; i < node->n_children; i++)
+    sum += all_metadata_sum(node->children[i]);
+
+  return sum;
+}
+
+int node_value(const struct Node *node) {
+  if (node->n_children == 0)
+    return metadata_sum(node);
+
+  int value = 0;
+  for (int i = 0; i < node->n_metadata; i++) {
+    int index = node->metadata[i] - 1;
+    if (index >= 0 && index < node->n_children)
+      value += node_value(node->children[index]);
+  }
+
+  return value;
 }
 
 void print_tree(const struct Node *node, int lvl) {
@@ -131,9 +151,11 @@ int main(void) {
 
   struct Node *tree = build_tree(&vec);
 
-  print_tree(tree, 0);
+  // print_tree(tree, 0);
 
-  printf("%d\n", metadata_sum(tree));
+  printf("%d\n", all_metadata_sum(tree));
+
+  printf("%d\n", node_value(tree));
 
   cleanup_node(tree);
   cleanup_vector(&vec);
