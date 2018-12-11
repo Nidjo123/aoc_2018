@@ -5,6 +5,7 @@
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 #define ABS(x) ((x) < 0 ? -(x) : (x))
 #define INIT_CAPACITY 64
+#define HEIGHT_LIMIT 30
 
 struct Particle {
   int x, y;
@@ -113,13 +114,13 @@ int main(void) {
   assure_positive_quadrant(&particles, &aabb);
 
   int second = 0;
-  while (aabb.maxy - aabb.miny > 30) {
+  while (aabb.maxy - aabb.miny > HEIGHT_LIMIT) {
     // update particle positions
     update_particles(&particles, &aabb);
     second++;
   }
 
-  while (aabb.maxy - aabb.miny <= 30) {
+  while (aabb.maxy - aabb.miny <= HEIGHT_LIMIT) {
     printf("Second %d\n", second++);
     print_particles(&particles, &aabb);
     update_particles(&particles, &aabb);
