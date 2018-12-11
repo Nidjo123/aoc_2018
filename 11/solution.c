@@ -75,7 +75,7 @@ int main(void) {
     if (n == 3) // already done
       continue;
     const struct Result new_res = max_power_NxN(n);
-    if (new_res.power >= res.power)
+    if (new_res.power > res.power)
       res = new_res;
   }
 
